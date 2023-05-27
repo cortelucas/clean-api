@@ -6,17 +6,21 @@
   "scripts": {
     "test": "",
     "test:staged": "",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
     "lint:fix": "standard --fix"
   },
   "lint-staged": {
     "*.js": [
-      "npm run lint:fix"
+      "npm run lint:fix",
+      "git add"
     ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "standard": "^17.0.0"
   }
