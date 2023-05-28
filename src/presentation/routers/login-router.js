@@ -1,6 +1,10 @@
 import { HTTPResponse } from '../helpers/http-response.js'
 
 export class LoginRouter {
+  constructor (authUseCase) {
+    this.authUseCase = authUseCase
+  }
+
   route (httpRequest) {
     if (!httpRequest || !httpRequest.body) {
       return HTTPResponse.serverError()
@@ -12,5 +16,6 @@ export class LoginRouter {
     if (!password) {
       return HTTPResponse.badRequest('password')
     }
+    this.authUseCase.auth(email, password)
   }
 }
