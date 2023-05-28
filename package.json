@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --watchAll",
-    "test:staged": "npm run test --passWithNoTests",
+    "test:staged": "NODE_OPTIONS=--experimental-vm-modules npx jest --passWithNoTests",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "lint:fix": "standard --fix"
