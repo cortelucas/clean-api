@@ -1,3 +1,4 @@
+import { InvalidParamError } from '../helpers/invalid-param-error.js'
 import { MissingParamError } from '../helpers/missing-param-error.js'
 import { ServerError } from '../helpers/server-error.js'
 import { UnauthorizedError } from '../helpers/unauthorized-error.js'
@@ -5,13 +6,28 @@ import { LoginRouter } from './login-router.js'
 
 const makeSUT = () => {
   const authUseCaseSpy = makeAuthUseCase()
+  const emailValidatorSpy = makeEmailValidator()
   authUseCaseSpy.accessToken = 'valid_token'
-  const sut = new LoginRouter(authUseCaseSpy)
+  const sut = new LoginRouter(authUseCaseSpy, emailValidatorSpy)
 
   return {
     sut,
-    authUseCaseSpy
+    authUseCaseSpy,
+    emailValidatorSpy
   }
+}
+
+const makeEmailValidator = () => {
+  class EmailValidatorSpy {
+    isValid (email) {
+      return this.isEmailValid
+    }
+  }
+
+  const emailValidatorSpy = new EmailValidatorSpy()
+  emailValidatorSpy.isEmailValid = true
+
+  return emailValidatorSpy
 }
 
 const makeAuthUseCase = () => {
@@ -167,17 +183,18 @@ describe('Login Router', () => {
     expect(httpResponse.body).toEqual(new ServerError())
   })
 
-  // test('Should return 400 if an invalid email is provided', async () => {
-  //   const { sut } = makeSUT()
-  //   const httpRequest = {
-  //     body: {
-  //       email: 'invalid_email@mail.com',
-  //       password: 'any_password'
-  //     }
-  //   }
-  //   const httpResponse = await sut.route(httpRequest)
+  test('Should return 400 if an invalid email is provided', async () => {
+    const { sut, emailValidatorSpy } = makeSUT()
+    emailValidatorSpy.isEmailValid = false
+    const httpRequest = {
+      body: {
+        email: 'invalid_email@mail.com',
+        password: 'any_password'
+      }
+    }
+    const httpResponse = await sut.route(httpRequest)
 
-  //   expect(httpResponse.statusCode).toBe(400)
-  //   expect(httpResponse.body).toEqual(new InvalidParamError('email'))
-  // })
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('email'))
+  })
 })
