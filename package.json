@@ -5,9 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --watch --silent --colors --noStackTrace",
-    "test:staged": "NODE_OPTIONS=--experimental-vm-modules npx jest --passWithNoTests --findRelatedTests --silent --noStackTrace",
-    "test:ci": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage --silent --colors --noStackTrace",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --silent --colors --noStackTrace --passWithNoTests",
+    "test:unit": "npm test -- --watch",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": "npm test -- --coverage",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "lint:fix": "standard --fix"
