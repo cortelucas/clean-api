@@ -7,9 +7,15 @@
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --watch --silent --colors --noStackTrace",
     "test:staged": "NODE_OPTIONS=--experimental-vm-modules npx jest --passWithNoTests --findRelatedTests --silent --noStackTrace",
+    "test:ci": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "lint:fix": "standard --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run test:ci"
+    }
   },
   "jest": {
     "transform": {},
