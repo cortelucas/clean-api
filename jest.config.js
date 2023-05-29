@@ -1,5 +1,6 @@
 export default {
   transform: {},
   coverageDirectory: 'coverage',
-  testEnvironment: 'node'
+  testEnvironment: 'node',
+  collectCoverageFrom: ['**/src/**/*.js']
 }
