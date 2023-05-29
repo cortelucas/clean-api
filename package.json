@@ -6,17 +6,13 @@
   "type": "module",
   "scripts": {
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --silent --colors --noStackTrace --passWithNoTests",
-    "test:unit": "npm test -- --watch",
+    "test:unit": "npm test -- --watch -c jest.unit.config.js",
+    "test:integration": "npm test -- --watch -c jest.integration.config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "lint:fix": "standard --fix"
-  },
-  "jest": {
-    "transform": {},
-    "coverageDirectory": "coverage",
-    "testEnvironment": "node"
   },
   "standard": {
     "env": [
