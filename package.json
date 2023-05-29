@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --watchAll",
-    "test:staged": "NODE_OPTIONS=--experimental-vm-modules npx jest --passWithNoTests",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --watch --silent --colors --noStackTrace",
+    "test:staged": "NODE_OPTIONS=--experimental-vm-modules npx jest --passWithNoTests --findRelatedTests --silent --noStackTrace",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "lint:fix": "standard --fix"
